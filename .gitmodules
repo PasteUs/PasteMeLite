@@ -1,0 +1,6 @@
+[submodule "PasteMeFrontend"]
+	path = PasteMeFrontend
+	url = https://github.com/PasteUs/PasteMeFrontend.git
+[submodule "PasteMeGoBackend"]
+	path = PasteMeGoBackend
+	url = https://github.com/PasteUs/PasteMeGoBackend.git
