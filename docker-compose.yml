@@ -12,6 +12,6 @@ services:
     restart: always
     volumes:
       - ./backend/data/:/data/
-      - ./frontend/usr/:/pasteme_frontend/
+      #- ./frontend/usr/:/pasteme_frontend/usr/
     ports:
       - 80:8000
