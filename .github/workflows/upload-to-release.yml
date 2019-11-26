@@ -1,0 +1,73 @@
+name: PasteMe Lite Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+
+  release:
+    if: github.repository == 'PasteUs/PasteMeLite'
+    name: Release on ${{ matrix.os }} and upload
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node_version: [12.x]
+        go_version: [1.13]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v1
+        with:
+          node_version: ${{ matrix.node_version }}
+
+      - name: Set up Go ${{ matrix.go_version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go_version }}
+        id: go
+
+      - name: Update submodule
+        run: |
+          git submodule update --init --recursive
+
+      - name: Build Frontend
+        run: |
+          cp vue.config.js PasteMeFrontend
+          cd PasteMeFrontend
+          npm install
+          npm run build
+          mv pasteme_frontend/usr/config.example.json pasteme_frontend/usr/config.json
+          rm -rf pasteme_frontend/conf.d pasteme_frontend/report.html
+          cd ..
+
+      - name: Build Backend
+        run: |
+          cp server.go PasteMeGoBackend
+          cd PasteMeGoBackend
+          go mod download
+          go build main.go
+          cd ..
+        env:
+          GO111MODULE: on
+          GOPROXY: https://goproxy.io
+          GOOS: linux
+
+      - name: Gzip
+        run: |
+          mkdir pasteme_lite
+          cp doc/DEPLOY.md pasteme_lite/README.md
+          cp -r PasteMeFrontend/pasteme_frontend pasteme_lite
+          cp PasteMeGoBackend/main pasteme_lite/pastemed
+          tar -czvf pasteme_lite.tar.gz pasteme_lite
+
+      - name: Upload to release
+        uses: JasonEtco/upload-to-release@master
+        with:
+          args: pasteme_lite.tar.gz application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

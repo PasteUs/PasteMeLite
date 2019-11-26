@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  pasteme-lite:
+    build: .
+    container_name: pasteme-lite
+    healthcheck:
+      test: ["CMD", "wget", "localhost:8000/?method=beat", "--output=/dev/null"]
+      interval: 45s
+      timeout: 3s
+      retries: 3
+    restart: always
+    volumes:
+      - ./backend/data/:/data/
+      #- ./frontend/usr/:/pasteme_frontend/usr/
+    ports:
+      - 80:8000
