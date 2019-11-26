@@ -54,7 +54,6 @@ jobs:
           cd ..
         env:
           GO111MODULE: on
-          GOPROXY: https://goproxy.io
           GOOS: linux
 
       - name: Gzip
