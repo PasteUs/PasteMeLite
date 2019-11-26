@@ -2,16 +2,16 @@ FROM node:12 as frontend_builder
 COPY ./PasteMeFrontend /source
 COPY ./vue.config.js /source/vue.config.js
 WORKDIR /source
-RUN npm install --registry=https://registry.npm.taobao.org
+RUN npm install
 RUN npm run build
 RUN mv pasteme_frontend/usr/config.example.json pasteme_frontend/usr/config.json
 RUN rm -rf pasteme_frontend/conf.d pasteme_frontend/report.html
 
-FROM registry.cn-hangzhou.aliyuncs.com/pasteus/golang-alpine:1.0.0 as backend_builder
+FROM golang:1.13-alpine as backend_builder
+RUN apk --no-cache add build-base
 COPY ./PasteMeGoBackend /go/src/github.com/PasteUs/PasteMeGoBackend
 COPY ./server.go /go/src/github.com/PasteUs/PasteMeGoBackend/server/server.go
 ENV GO111MODULE=on \
-    GOPROXY=https://goproxy.io \
     GOOS=linux
 WORKDIR /go/src/github.com/PasteUs/PasteMeGoBackend
 RUN go mod download
