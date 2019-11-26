@@ -2,7 +2,7 @@ version: "3"
 
 services:
   pasteme-lite:
-    image: registry.cn-hangzhou.aliyuncs.com/pasteus/pasteme-lite:1.0.0
+    image: registry.cn-hangzhou.aliyuncs.com/pasteus/pasteme-lite:0.0.1
     container_name: pasteme-lite
     healthcheck:
       test: ["CMD", "wget", "localhost:8000/?method=beat", "--output=/dev/null"]
