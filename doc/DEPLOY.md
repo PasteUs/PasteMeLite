@@ -15,7 +15,7 @@ docker run \
     -d \
     -p 80:8000 \
     -v ${PWD}/backend/data/:/data/ \
-    registry.cn-hangzhou.aliyuncs.com/pasteus/pasteme-lite:0.0.2
+    registry.cn-hangzhou.aliyuncs.com/pasteus/pasteme-lite:0.0.3
 ```
 
 ## docker-compose
