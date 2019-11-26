@@ -1,5 +1,7 @@
 # PasteMe Lite 部署文档
 
+> 默认监听 8000 端口
+
 ## 直接运行
 
 > 由于 sqlite 使用了 cgo，故目前只支持 linux-amd64

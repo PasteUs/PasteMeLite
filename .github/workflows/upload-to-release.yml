@@ -47,7 +47,7 @@ jobs:
 
       - name: Build Backend
         run: |
-          cp server.go PasteMeGoBackend
+          cp server.go PasteMeGoBackend/server
           cd PasteMeGoBackend
           go mod download
           go build main.go
@@ -63,6 +63,7 @@ jobs:
           cp doc/DEPLOY.md pasteme_lite/README.md
           cp -r PasteMeFrontend/pasteme_frontend pasteme_lite
           cp PasteMeGoBackend/main pasteme_lite/pastemed
+          echo '{"address":"0.0.0.0","port":80,"database":{"type":"sqlite","username":"username","password":"password","server":"pasteme-mysql","port":3306,"database":"pasteme"}}' > pasteme_lite/config.json
           tar -czvf pasteme_lite.tar.gz pasteme_lite
 
       - name: Upload to release

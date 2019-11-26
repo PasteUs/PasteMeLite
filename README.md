@@ -3,7 +3,7 @@
 </p>
 <p align="center">
   <a href="./doc/DEPLOY.md">
-    <img src="https://img.shields.io/badge/pasteme__lite.tar.gz-20.5MB-green.svg" alt="version">
+    <img src="https://img.shields.io/badge/pasteme__lite.tar.gz-9.9MB-green.svg" alt="version">
   </a>
   <a href="./doc/DEPLOY.md">
     <img src="https://img.shields.io/badge/docker_image-48.1MB-darkgreen.svg" alt="version">
